@@ -6,7 +6,7 @@ const main = document.querySelector("main");
 const projects = [
     {
         taskName :"APLIKACJE DESKTOPOWE",
-        TODO : ["todo 1"],
+        TODO : ["TO DO 1"],
         INPROGRESS : ["progress 1"],
         TESTING : ["test 1"],
         DONE : ["done 1"],
@@ -68,7 +68,7 @@ function showGetBack(project){
     }
 }
 
-function showArrays(project){
+function showArrays(project, taskToShow, listElemToShow){
     const tasksList = document.createElement("div");
     tasksList.classList.add("tasks-list");
 
@@ -84,6 +84,7 @@ function showArrays(project){
             const todoChild = document.createElement("div");
             todoChild.classList.add("list-elem");
             todoChild.innerText = project.TODO;
+        
 
             todoParent.appendChild(listHeader);
             todoParent.appendChild(todoChild);
@@ -147,6 +148,31 @@ projects.forEach((project)=>{
   })
 })
 
+const users = [];
 
+document.querySelector(".addUser").addEventListener("click",(e)=>{
+    const ifExists = document.querySelector(".users-list")
+    if(ifExists){
+        const ifis = document.querySelector(".users-list")
+        document.querySelector("aside").removeChild(ifExists);
+    } 
+    
+    let user = prompt("Podaj nazwe użytkownika do tego zadania: ");             
+    users.push(user);
 
+    const userList = document.createElement("ul");
+    userList.classList.add("users-list");
+    document.querySelector("aside").appendChild(userList);
+
+    users.forEach((elem) =>{
+        
+      const li = document.createElement("li");
+      const userImage = document.createElement("img");
+      userImage.src = "/images/user.png";                                                         
+
+      li.innerText = elem;
+      userList.appendChild(li);
+      li.appendChild(userImage);
+  })
+  })
 
