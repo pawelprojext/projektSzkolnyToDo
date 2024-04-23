@@ -1,8 +1,6 @@
 const cards = document.querySelector(".cards");
 const main = document.querySelector("main");
 
-
-// musisz dodać zmienną nazwa w obiekcie 
 const projects = [
     {
         taskName :"APLIKACJE DESKTOPOWE",
@@ -62,81 +60,62 @@ function showGetBack(project){
         img.addEventListener("click", ()=>{
             showCards();
             main.removeChild(document.querySelector(".tasks-list"));
+            document.querySelector(".users-list").innerHTML = "";
+            document.querySelector(".extend-list").classList.add("hide");
         })
     } else{
         document.querySelector(".GetBackText").innerText = project.taskName;
     }
 }
 
+
+
 function showArrays(project, taskToShow, listElemToShow){
     const tasksList = document.createElement("div");
     tasksList.classList.add("tasks-list");
+
+    function showTasksCards(t1, t2){
+        const todoParent = document.createElement("div");
+        todoParent.classList.add("card");
+        const listHeader = document.createElement("h4");
+        listHeader.innerText = t1;
+        const todoChild = document.createElement("div");
+        todoChild.classList.add("list-elem");
+        todoChild.innerText = t2;
+    
+        todoParent.appendChild(listHeader);
+        todoParent.appendChild(todoChild);
+        tasksList.appendChild(todoParent);
+    }
 
     const ProjectElems = [project.TODO, project.INPROGRESS, project.TESTING, project.DONE];
     
    
     ProjectElems.forEach((elems, i)=>{
         if(i == 0){
-            const todoParent = document.createElement("div");
-            todoParent.classList.add("card");
-            const listHeader = document.createElement("h4");
-            listHeader.innerText = "TODO";
-            const todoChild = document.createElement("div");
-            todoChild.classList.add("list-elem");
-            todoChild.innerText = project.TODO;
-        
-
-            todoParent.appendChild(listHeader);
-            todoParent.appendChild(todoChild);
-            tasksList.appendChild(todoParent);
+            showTasksCards("TODO", project.TODO)
         } else if(i == 1){
-            const todoParent = document.createElement("div");
-            todoParent.classList.add("card");
-            const listHeader = document.createElement("h4");
-            listHeader.innerText = "IN PROGRESS";
-            const todoChild = document.createElement("div");
-            todoChild.classList.add("list-elem");
-            todoChild.innerText = project.INPROGRESS;
-
-            todoParent.appendChild(listHeader);
-            todoParent.appendChild(todoChild);
-            tasksList.appendChild(todoParent);
+            showTasksCards("IN PROGRESS", project.INPROGRESS);
         } else if (i == 2){
-            const todoParent = document.createElement("div");
-            todoParent.classList.add("card");
-            const listHeader = document.createElement("h4");
-            listHeader.innerText = "TESTING";
-            const todoChild = document.createElement("div");
-            todoChild.classList.add("list-elem");
-            todoChild.innerText = project.TESTING;
-
-            todoParent.appendChild(listHeader);
-            todoParent.appendChild(todoChild);
-            tasksList.appendChild(todoParent);
+            showTasksCards("TESTING", project.TESTING);
         } else if(i == 3){
-            const todoParent = document.createElement("div");
-            todoParent.classList.add("card");
-            const listHeader = document.createElement("h4");
-            listHeader.innerText = "DONE !";
-            const todoChild = document.createElement("div");
-            todoChild.classList.add("list-elem");
-            todoChild.innerText = project.DONE;
-
-            todoParent.appendChild(listHeader);
-            todoParent.appendChild(todoChild);
-            tasksList.appendChild(todoParent);
+            showTasksCards("DONE !", project.DONE);
     }
         main.appendChild(tasksList)
-        
         })
 }
 
+const usersT1 = ["Filip Kaczmarek","Paweł Kaliczyński"];
+const usersT2 = ["Jakub Karasiński", "Mikołaj Borowski"];
+const usersT3 = ["Kacper Filipiak"];
 
-projects.forEach((project)=>{
+projects.forEach((project, index)=>{
     const div = document.createElement("div");
     div.classList.add("card");
     const projectName = document.createElement("h4");
     projectName.innerText = project.taskName;
+
+    div.id = index + 1;
 
     div.appendChild(projectName);
     cards.appendChild(div);
@@ -145,34 +124,84 @@ projects.forEach((project)=>{
     showGetBack(project);
     hideCards();
     showArrays(project);
-  })
+
+    document.querySelector(".extend-list").classList.remove("hide");
+
+        if(div.id == 1){
+            usersT1.forEach((e)=>{
+                const user = document.createElement("li");
+                user.innerText = e;
+        
+                const userImage = document.createElement("img");
+                userImage.src = "/images/user.png";          
+        
+                user.appendChild(userImage)
+                document.querySelector(".users-list").appendChild(user);
+            });
+
+            document.querySelector(".addUser").addEventListener("click", ()=>{
+                   let addUserP = prompt("Podaj nazwę użytkownika");
+                    document.querySelector(".users-list").innerHTML = "";
+                    usersT1.push(addUserP);
+
+                refreshData(usersT1)
+            })
+
+            
+        } else if(div.id == 2){
+             usersT2.forEach((e)=>{
+                const user = document.createElement("li");
+                user.innerText = e;
+        
+                const userImage = document.createElement("img");
+                userImage.src = "/images/user.png";          
+        
+                user.appendChild(userImage)
+                document.querySelector(".users-list").appendChild(user);
+            });
+
+            document.querySelector(".addUser").addEventListener("click", ()=>{
+                let addUserP = prompt("Podaj nazwę użytkownika");
+                    document.querySelector(".users-list").innerHTML = "";
+                    usersT2.push(addUserP);
+
+                refreshData(usersT2)
+
+            })
+
+        } else if(div.id == 3){
+            usersT3.forEach((e)=>{
+                const user = document.createElement("li");
+                user.innerText = e;
+        
+                const userImage = document.createElement("img");
+                userImage.src = "/images/user.png";          
+        
+                user.appendChild(userImage)
+                document.querySelector(".users-list").appendChild(user);
+            });
+
+            document.querySelector(".addUser").addEventListener("click", ()=>{
+                    let addUserP = prompt("Podaj nazwę użytkownika");
+                    document.querySelector(".users-list").innerHTML = "";
+                    usersT3.push(addUserP);
+
+                    refreshData(usersT3)
+            })
+        }
+    })
 })
 
-const users = [];
 
-document.querySelector(".addUser").addEventListener("click",(e)=>{
-    const ifExists = document.querySelector(".users-list")
-    if(ifExists){
-        const ifis = document.querySelector(".users-list")
-        document.querySelector("aside").removeChild(ifExists);
-    } 
-    
-    let user = prompt("Podaj nazwe użytkownika do tego zadania: ");             
-    users.push(user);
+function refreshData(arr){
+    arr.forEach((e)=>{
+        const user = document.createElement("li");
+        user.innerText = e;
 
-    const userList = document.createElement("ul");
-    userList.classList.add("users-list");
-    document.querySelector("aside").appendChild(userList);
+        const userImage = document.createElement("img");
+        userImage.src = "/images/user.png";          
 
-    users.forEach((elem) =>{
-        
-      const li = document.createElement("li");
-      const userImage = document.createElement("img");
-      userImage.src = "/images/user.png";                                                         
-
-      li.innerText = elem;
-      userList.appendChild(li);
-      li.appendChild(userImage);
-  })
-  })
-
+        user.appendChild(userImage)
+        document.querySelector(".users-list").appendChild(user);
+    });
+}

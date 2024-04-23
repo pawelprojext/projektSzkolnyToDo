@@ -136,3 +136,7 @@ main{
 li img{
     max-width: 20%;
 }
+
+.hide{
+    visibility: hidden;
+}
